@@ -16,3 +16,21 @@ namespace _9._1
     }
 }
 =End=
+===Pr./Version 1.2;
+Libr:System.dll,mscorlib.dll;
+Code:
+using System;
+namespace _9._1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Console.WriteLine("Hello World2!");
+            Console.ReadLine();
+        }
+        
+    }
+}
+=End=
