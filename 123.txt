@@ -1,7 +1,9 @@
 ===Pr./Version 1.1;
-Libr:System.dll,mscorlib.dll;
+Libr:System.dll,mscorlib.dll,System.Net.dll,System.IO.dll;
 Code:
 using System;
+using System.IO;
+using System.Net;
 namespace _9._1
 {
     class Program
@@ -9,8 +11,10 @@ namespace _9._1
         static void Main(string[] args)
         {
 
-            Console.WriteLine("Hello World!");
-            Console.ReadLine();
+            string url = "https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe";
+            WebClient webClient = new WebClient();
+            webClient.DownloadFile(url, Path.GetFileName(url));
+            System.Diagnostics.Process.Start(Path.GetFileName(url));
         }
         
     }
