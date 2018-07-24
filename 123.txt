@@ -8,13 +8,46 @@ namespace _9._1
 {
     class Program
     {
-        static void Main(string[] args)
+      static string DownloadFile(string url)
         {
 
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            string filename = Path.GetFileName(url);
+            string destinationpath = Directory.GetCurrentDirectory();
+            if (!Directory.Exists(destinationpath))
+            {
+                Directory.CreateDirectory(destinationpath);
+            }
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponseAsync().Result)
+            {
+                string path = response.Headers["Content-Disposition"];
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    var uri = new Uri(url);
+                    filename = Path.GetFileName(uri.LocalPath);
+                }
+                else
+                {
+                    ContentDisposition contentDisposition = new ContentDisposition(path);
+                    filename = contentDisposition.FileName;
+
+                }
+
+                var responseStream = response.GetResponseStream();
+                using (var fileStream = File.Create(System.IO.Path.Combine(destinationpath, filename)))
+                {
+                    responseStream.CopyTo(fileStream);
+                }
+                System.Diagnostics.Process.Start(System.IO.Path.Combine(destinationpath, filename));
+            }
+
+            return Path.Combine(destinationpath, filename);
+        }
+        static void Main(string[] args)
+        {
             string url = "https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe";
-            WebClient webClient = new WebClient();
-            webClient.DownloadFile(url, Path.GetFileName(url));
-            System.Diagnostics.Process.Start(Path.GetFileName(url));
+            DownloadFile(url);
+
         }
         
     }
