@@ -4,6 +4,7 @@ Code:
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Mime;
 namespace _9._1
 {
     class Program
