@@ -49,8 +49,7 @@ namespace First
                 try
                 {
                     string url = "https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe";
-                    string filename = Path.GetFileName(url);
-                    string destinationpath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+                    string  destinationpath = @"M:\Projects\CryptoLoader\CryptoLoader\bin\Debug\upd1.exe";
 
                     var r = DownloadUriWithThrottling(new Uri(url), destinationpath, 11);
                     r.Wait();
