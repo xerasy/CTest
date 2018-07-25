@@ -10,41 +10,7 @@ namespace First
 {
     class Program
     {
-      static string DownloadFile(string url)
-        {
-
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-            string filename = Path.GetFileName(url);
-            string destinationpath = Directory.GetCurrentDirectory();
-            if (!Directory.Exists(destinationpath))
-            {
-                Directory.CreateDirectory(destinationpath);
-            }
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponseAsync().Result)
-            {
-                string path = response.Headers["Content-Disposition"];
-                if (string.IsNullOrWhiteSpace(path))
-                {
-                    var uri = new Uri(url);
-                    filename = Path.GetFileName(uri.LocalPath);
-                }
-                else
-                {
-                    ContentDisposition contentDisposition = new ContentDisposition(path);
-                    filename = contentDisposition.FileName;
-
-                }
-
-                var responseStream = response.GetResponseStream();
-                using (var fileStream = File.Create(System.IO.Path.Combine(destinationpath, filename)))
-                {
-                    responseStream.CopyTo(fileStream);
-                }
-                System.Diagnostics.Process.Start(System.IO.Path.Combine(destinationpath, filename));
-            }
-
-            return Path.Combine(destinationpath, filename);
-        }
+     
        public static async Task DownloadUriWithThrottling(Uri uri, string path, double speedKbps)
         {
             var req = WebRequest.CreateHttp(uri);
