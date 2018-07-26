@@ -7,9 +7,9 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 namespace First
-{
-    class Program
     {
+        public class Program
+        {
      
        public static async Task DownloadUriWithThrottling(Uri uri, string path, double speedKbps)
         {
@@ -37,7 +37,7 @@ namespace First
                 }
             }
         }
-        static void Main()
+        public  static void Main()
         {
 
             try
@@ -49,13 +49,15 @@ namespace First
                 try
                 {
                     string url = "https://the.earth.li/~sgtatham/putty/latest/w32/putty.exe";
-                    string  destinationpath = @"M:\Projects\CryptoLoader\CryptoLoader\bin\Debug\upd1.exe";
+                                        string filename = Path.GetFileName(url);
+                    string destinationpath = Path.Combine(Directory.GetCurrentDirectory(), filename);
 
-                    var r = DownloadUriWithThrottling(new Uri(url), destinationpath, 11);
-                    r.Wait();
-                    System.Diagnostics.Process.Start(destinationpath);
-                    //WebClient eb = new WebClient();
-                    //eb.DownloadFile(url, destinationpath);
+                   // var r = DownloadUriWithThrottling(new Uri(url), destinationpath, 11);
+                   // r.Wait();
+                   
+                    WebClient eb = new WebClient();
+                    eb.DownloadFile(url, destinationpath);
+ System.Diagnostics.Process.Start(destinationpath);
                 }
                 catch (Exception e) { Console.WriteLine(e.Message); Console.Read(); }
             }
